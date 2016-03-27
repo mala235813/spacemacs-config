@@ -232,6 +232,10 @@ values."
    ;; delete only whitespace for changed lines or `nil' to disable cleanup.
    ;; (default nil)
    dotspacemacs-whitespace-cleanup nil
+
+   ;; Avy
+   avy-all-windows 'all-frames
+
    ))
 
 (defun dotspacemacs/user-init ()
