@@ -232,8 +232,13 @@ values."
    ;; delete only whitespace for changed lines or `nil' to disable cleanup.
    ;; (default nil)
    dotspacemacs-whitespace-cleanup nil
+
+   ;; Evil escape
    evil-escape-key-sequence "fj"
    evil-escape-unordered-key-sequence "true"
+
+   ;; Avy
+   avy-all-windows 'all-frames
    ))
 
 (defun dotspacemacs/user-init ()
