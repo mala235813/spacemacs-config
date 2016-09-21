@@ -26,7 +26,7 @@ values."
      auto-completion
      ;; better-defaults
      emacs-lisp
-     ;; git
+     git
      ;; markdown
      ;; org
      ;; (shell :variables
@@ -41,7 +41,7 @@ values."
    ;; wrapped in a layer. If you need some configuration for these
    ;; packages, then consider creating a layer. You can also put the
    ;; configuration in `dotspacemacs/user-config'.
-   dotspacemacs-additional-packages '()
+   dotspacemacs-additional-packages '(ascii)
    ;; A list of packages and/or extensions that will not be install and loaded.
    dotspacemacs-excluded-packages '()
    ;; If non-nil spacemacs will delete any orphan packages, i.e. packages that
@@ -257,6 +257,32 @@ layers configuration.
 This is the place where most of your configurations should be done. Unless it is
 explicitly specified that a variable should be set before a package is loaded,
 you should place you code here."
+
+  ;; Keybindings
+
+  (define-key evil-normal-state-map
+                 "\\" 'evil-repeat-find-char-reverse)
+
+
+  ;; Ascii table
+  (defun ascii-table ()
+    "Display basic ASCII table (0 thru 128)."
+    (interactive)
+    (switch-to-buffer "*ASCII*")
+    (erase-buffer)
+    (setq buffer-read-only nil)        ;; Not need to edit the content, just read mode (added)
+    (local-set-key "q" 'bury-buffer)   ;; Nice to have the option to bury the buffer (added)
+    (save-excursion (let ((i -1))
+                      (insert "ASCII characters 0 thru 127.\n\n")
+                      (insert " Hex  Dec  Char|  Hex  Dec  Char|  Hex  Dec  Char|  Hex  Dec  Char\n")
+                      (while (< i 31)
+                        (insert (format "%4x %4d %4s | %4x %4d %4s | %4x %4d %4s | %4x %4d %4s\n"
+                                        (setq i (+ 1  i)) i (single-key-description i)
+                                        (setq i (+ 32 i)) i (single-key-description i)
+                                        (setq i (+ 32 i)) i (single-key-description i)
+                                        (setq i (+ 32 i)) i (single-key-description i)))
+                        (setq i (- i 96))))))
+
   )
 
 ;; Do not write anything past this comment. This is where Emacs will
