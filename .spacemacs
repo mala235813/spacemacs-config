@@ -43,6 +43,7 @@ values."
    ;; packages, then consider creating a layer. You can also put the
    ;; configuration in `dotspacemacs/user-config'.
    dotspacemacs-additional-packages '(ascii
+                                      magit-filenotify
                                       csv-mode)
    ;; A list of packages and/or extensions that will not be install and loaded.
    dotspacemacs-excluded-packages '()
@@ -258,10 +259,11 @@ explicitly specified that a variable should be set before a package is loaded,
 you should place you code here."
 
   ;; Keybindings
-
   (define-key evil-normal-state-map
                  "\\" 'evil-repeat-find-char-reverse)
 
+  ;; Magit
+  (add-hook 'magit-status-mode-hook 'magit-filenotify-mode)
 
   ;; Ascii table
   (defun ascii-table ()
