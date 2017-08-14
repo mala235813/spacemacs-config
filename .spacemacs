@@ -271,7 +271,6 @@ you should place you code here."
   (define-key evil-normal-state-map
                  "\\" 'evil-repeat-find-char-reverse)
 
-
   ;; Ascii table
   (defun ascii-table ()
     "Display basic ASCII table (0 thru 128)."
@@ -291,7 +290,29 @@ you should place you code here."
                                         (setq i (+ 32 i)) i (single-key-description i)))
                         (setq i (- i 96))))))
 
-  )
+  ;; ===============
+  ;; Macros
+  ;; ===============
+
+  ;; m:
+  ;;
+  ;; (fset 'name
+  ;;    [...])
+  ;; @
+  ;;
+  ;; =>
+  ;;
+  ;; (setq name-macro [...])
+  ;; (fset 'name name-macro)
+  ;; (evil-set-register ?@ name-macro)
+  ;;
+  (setq dm-macro [
+    ?k ?k ?J ?y ?y ?p ?k ?0 ?w ?c ?E ?s ?e ?t ?q escape ?f ?\' ?x ?E ?a ?- ?m ?a ?c ?r ?o escape ?j ?0
+    ?W ?E ?a ?- ?m ?a ?c ?r ?o escape ?a return escape ?$ ?i return escape ?k ?d ?d ?k ?J ?i ?  escape ?B ?l ?y ?E ?P ?a ?  escape ?b ?h ?d ?E ?$ ?h ?x ?y ?y ?p
+    ?W ?c ?E ?? escape ?0 ?w ?c ?E ?e ?v ?i ?l ?- ?s ?e ?t ?- ?r ?e ?g ?i ?s ?t ?e ?r escape ?W])
+  (fset 'dm dm-macro)
+  (evil-set-register ?m dm-macro)
+)
 
 ;; Do not write anything past this comment. This is where Emacs will
 ;; auto-generate custom variable definitions.
