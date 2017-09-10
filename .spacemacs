@@ -294,7 +294,7 @@ you should place you code here."
   ;; Macros
   ;; ===============
 
-  ;; m:
+  ;; M:
   ;;
   ;; (fset 'name
   ;;    [...])
@@ -311,18 +311,115 @@ you should place you code here."
     ?W ?E ?a ?- ?m ?a ?c ?r ?o escape ?a return escape ?$ ?i return escape ?k ?d ?d ?k ?J ?i ?  escape ?B ?l ?y ?E ?P ?a ?  escape ?b ?h ?d ?E ?$ ?h ?x ?y ?y ?p
     ?W ?c ?E ?? escape ?0 ?w ?c ?E ?e ?v ?i ?l ?- ?s ?e ?t ?- ?r ?e ?g ?i ?s ?t ?e ?r escape ?W])
   (fset 'dm dm-macro)
-  (evil-set-register ?m dm-macro)
+  (evil-set-register ?M dm-macro)
 
-  ;; g:
+  ;; A:
+  ;;
+  ;; @
+  ;; ...code...
+  ;; /* Tested function call /
+  ;; <func-call>
+  ;; ...code...
+  ;;
+  ;; =>
+  ;;
+  ;; ...code...
+  ;;
+  ;; // Act
+  ;; <func-call>
+  ;;
+  ;; // Assert@
+  ;; ...code...
+  ;;
+  (setq act-assert-macro [?/ ?\\ ?/ ?\\ ?* ?  ?T ?e ?s ?t ?e return ?C return ?  ?  ?  ?  ?/ ?/ ?  ?A ?c ?t ?f ?j ?j ?o return ?  ?  ?  ?  ?/ ?/ ?  ?A ?s ?s ?e ?r ?t ?f ?j])
+  (fset 'act-assert act-assert-macro)
+  (evil-set-register ?A act-assert-macro)
+
+  ;; C:
+  ;;
+  ;; ...code...
+  ;; @/* <comment 1> */
+  ;; ...code...
+  ;; /* <comment 2> */
+  ;; ...code...
+  ;;
+  ;; =>
+  ;;
+  ;; ...code...
+  ;; ...code...
+  ;; @/* <comment 2> */
+  ;; ...code...
+  ;;
+  (setq comment-del-macro [?d ?d ?k ?/ ?\\ ?/ ?\\ ?* return])
+  (fset 'comment-del comment-del-macro)
+  (evil-set-register ?C comment-del-macro)
+
+  ;; D:
+  ;; @   CPPTEST_TEST(<test-func1>);
+  ;;     ...
+  ;;     CPPTEST_TEST(<test-func2>);
+  ;;
+  ;; =>
+  ;;
+  ;;    CPPTEST_TEST_DS(<test-func1>, CPPTEST_DS("<test-func1>"));
+  ;;    ...
+  ;; @  CPPTEST_TEST(<test-func2>);
+  ;;
+  (setq ds-declaration-macro [?f ?\( ?i ?_ ?D ?S ?f ?j ?f ?\( ?a ?  ?f ?j ?% ?% ?i ?  escape ?y ?i ?\) ?p ?B ?B ?h ?x ?E ?a ?, ?  ?C ?P ?P ?T ?E ?S ?T ?_ ?D ?S escape ?w ?v ?i ?W ?s ?\" ?v ?v ?v ?a ?\" ?s ?\) ?h ?h ?x ?x ?% ?h ?x ?/ ?C ?P ?P ?T ?E ?S ?T ?_ ?T ?E ?S ?T ?\( return ?0])
+  (fset 'ds-declaration ds-declaration-macro)
+  (evil-set-register ?D ds-declaration-macro)
+
+  ;; G:
   ;;
   ;; <var> <type>@
   ;; =>
   ;; GIOTEST_ASSERT_EQUAL_<type>_DS2(<var>);
   ;; [ENV]<var>@
   ;;
-  (setq gio-assert-macro [?y ?y ?p ?k ?W ?d ?a ?W ?B ?P ?a ?  escape ?B ?h ?x ?i ?G ?I ?O ?T ?E ?S ?T ?_ ?A ?S ?S ?E ?R ?T ?_ ?E ?Q ?U ?A ?L ?_ escape ?E ?a ?_ ?D ?S ?2 escape ?a ?\( escape ?l ?x ?A ?\) ?\; escape ?j ?d ?a ?W ?B ?i ?\[ ?E ?N ?V ?\] escape ?B])
+  (setq gio-assert-macro [?y ?y ?p ?k ?W ?d ?a ?W ?B ?P ?a ?  escape ?B ?h ?x ?i ?G ?I ?O ?T ?E ?S ?T ?_ ?A ?S ?S ?E ?R ?T ?_ ?E ?Q ?U ?A ?L ?_ escape ?E ?a ?_ ?D ?S ?2 escape ?a ?\( escape ?l ?x ?A ?\) ?\; escape ?j ?d ?a ?W ?B ?i ?\[ ?O ?U ?T ?\] escape ?B])
   (fset 'gio-assert gio-assert-macro)
-  (evil-set-register ?g gio-assert-macro)
+  (evil-set-register ?G gio-assert-macro)
+
+  ;; R:
+  ;;
+  ;; ...code...
+  ;; @void <class>::test_<func1>()
+  ;; {
+  ;;     ...code...
+  ;; }
+  ;;
+  ;; void <class>::test_<func2>()
+  ;; {
+  ;;     ...code...
+  ;;
+  ;; =>
+  ;;
+  ;; void <class>::test_<func1>()
+  ;; {
+  ;;    // Arrange
+  ;;     ...code...
+  ;; }
+  ;;
+  ;; @void <class>::test_<func2>()
+  ;; {
+  ;;     ...code...
+  ;;
+  ;;
+  (setq arrange-macro [?j ?o ?  ?  ?  ?  ?/ ?/ ?  ?A ?r ?r ?a ?n ?f ?g backspace ?g ?e backspace backspace backspace ?g ?e ?j ?f ?/ ?: ?: ?t ?e ?s ?t ?_ return])
+  (fset 'arrange arrange-macro)
+  (evil-set-register ?R arrange-macro)
+
+  ;; T:
+  ;;
+  ;; <CFoo> @
+  ;; =>
+  ;; TestData<CFoo> tdFoo;
+  ;; CFoo& subject = tdFoo.GetValue();
+  ;; @
+  ;;
+  (setq declare-test-data-for-class-macro "0i fj0dwEa fjDyiWa fjpBstdfjyypki    TestData<fjEa>fjA;fjj0i    fjEa& subject =fjA.GetValue();fjofj")
+  (fset 'declare-test-data-for-class declare-test-data-for-class-macro)
+  (evil-set-register ?T declare-test-data-for-class-macro)
 
 )
 
