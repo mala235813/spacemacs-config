@@ -337,8 +337,9 @@ you should place you code here."
 
   ;; C:
   ;;
+  ;; @
   ;; ...code...
-  ;; @/* <comment 1> */
+  ;; /* <comment 1> */
   ;; ...code...
   ;; /* <comment 2> */
   ;; ...code...
@@ -346,11 +347,11 @@ you should place you code here."
   ;; =>
   ;;
   ;; ...code...
-  ;; ...code...
-  ;; @/* <comment 2> */
+  ;; @...code...
+  ;; /* <comment 2> */
   ;; ...code...
   ;;
-  (setq comment-del-macro [?d ?d ?k ?/ ?\\ ?/ ?\\ ?* return])
+  (setq comment-del-macro [?/ ?\\ ?* return ?d ?d ?k ?/ ?\\])
   (fset 'comment-del comment-del-macro)
   (evil-set-register ?C comment-del-macro)
 
@@ -380,6 +381,27 @@ you should place you code here."
   (fset 'gio-assert gio-assert-macro)
   (evil-set-register ?G gio-assert-macro)
 
+  ;; P:
+  ;;
+  ;; @
+  ;; ...code...
+  ;; CPPTEST_POST_CONDITION_PTR(...)
+  ;; ...code...
+  ;; CPPTEST_POST_CONDITION_PTR(...)
+  ;; ...code...
+  ;;
+  ;; =>
+  ;;
+  ;; ...code...
+  ;; @...code...
+  ;; CPPTEST_POST_CONDITION_PTR(...)
+  ;; ...code...
+  ;;
+  (setq del-post-cond-ptr-macro [?/ ?C ?P ?P ?T ?E ?S ?T ?_ ?P ?O ?S ?T ?_ ?C ?O ?N ?D ?I ?T ?I ?O ?N ?_ ?P ?T ?R return ?d ?d ?k ?/ ?\\])
+  (fset 'del-post-cond-ptr del-post-cond-ptr-macro)
+  (evil-set-register ?P del-post-cond-ptr-macro)
+
+
   ;; R:
   ;;
   ;; ...code...
@@ -405,7 +427,7 @@ you should place you code here."
   ;;     ...code...
   ;;
   ;;
-  (setq arrange-macro [?j ?o ?  ?  ?  ?  ?/ ?/ ?  ?A ?r ?r ?a ?n ?f ?g backspace ?g ?e backspace backspace backspace ?g ?e ?j ?f ?/ ?: ?: ?t ?e ?s ?t ?_ return])
+  (setq arrange-macro [?/ ?: ?: ?t ?e ?s ?t ?_ return ?j ?o ?  ?  ?  ?  ?/ ?/ ?  ?A ?r ?r ?a ?n ?f ?g backspace ?g ?e backspace backspace backspace ?g ?e ?j ?f])
   (fset 'arrange arrange-macro)
   (evil-set-register ?R arrange-macro)
 
