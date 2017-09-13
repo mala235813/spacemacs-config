@@ -466,6 +466,18 @@ you should place you code here."
   (fset 'report-header report-header-macro)
   (evil-set-register ?H report-header-macro)
 
+  ;; V:
+  ;;
+  ;; @test_<func>
+  ;;
+  ;; =>
+  ;;
+  ;; @${test_suite_loc}/test_<func>.csv
+  ;;
+  (setq csv-file-path-macro "i${test_suite_loc}/fjA.csvfj0")
+  (fset 'csv-file-path csv-file-path-macro)
+  (evil-set-register ?V csv-file-path-macro)
+
 )
 
 ;; Do not write anything past this comment. This is where Emacs will
