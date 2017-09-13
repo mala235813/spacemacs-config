@@ -443,6 +443,29 @@ you should place you code here."
   (fset 'declare-test-data-for-class declare-test-data-for-class-macro)
   (evil-set-register ?T declare-test-data-for-class-macro)
 
+  ;; H:
+  ;;
+  ;; @
+  ;; ...
+  ;; <type> <class>::test_<testname>()
+  ;; {
+  ;;    ...
+  ;;    // Assert
+  ;;
+  ;; =>
+  ;;
+  ;; <type> <class>::test_<testname>()
+  ;; {
+  ;;    ...
+  ;;    // Assert
+  ;;    GIOTEST_CREATE_HEADER(
+  ;;        "test_<testname>",
+  ;;        "<type> <class>::test_<testname>()");@
+  ;;
+  (setq report-header-macro [?/ ?: ?: ?t ?e ?s ?t ?_ return ?0 ?y ?% ?/ ?\\ ?/ ?\\ ?/ ?  ?A ?s ?s ?e ?r ?t return ?o escape ?p ?F ?: ?l ?y ?t ?\( ?0 ?P ?a ?  ?f ?j ?0 ?v ?E ?s ?\" ?E ?a ?, ?f ?j ?w ?v ?% ?s ?\" ?O ?G ?I ?O ?T ?E ?S ?T ?_ ?C ?R ?E ?A ?T ?E ?_ ?H ?E ?A ?D ?E ?R ?\( ?f ?j ?j ?0 ?i ?  ?  ?  ?  ?  ?  ?  ?  ?f ?j ?f ?, ?a return ?f ?j ?A ?\) ?\; ?f ?j])
+  (fset 'report-header report-header-macro)
+  (evil-set-register ?H report-header-macro)
+
 )
 
 ;; Do not write anything past this comment. This is where Emacs will
