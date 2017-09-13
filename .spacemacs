@@ -478,6 +478,19 @@ you should place you code here."
   (fset 'csv-file-path csv-file-path-macro)
   (evil-set-register ?V csv-file-path-macro)
 
+  ;; S:
+  ;;
+  ;; <var> <type>@
+  ;;
+  ;; =>
+  ;;
+  ;; GIOTEST_ASSERT_EQUAL_<type>_DS2(<var>);
+  ;; @[OUT]<var>
+  ;;
+  (setq gio-assert-macro [?y ?y ?p ?k ?W ?d ?a ?W ?B ?P ?a ?  escape ?B ?h ?x ?i ?G ?I ?O ?T ?E ?S ?T ?_ ?A ?S ?S ?E ?R ?T ?_ ?E ?Q ?U ?A ?L ?_ escape ?E ?a ?_ ?D ?S ?2 escape ?a ?\( escape ?l ?x ?A ?\) ?\; escape ?j ?d ?a ?W ?B ?i ?\[ ?O ?U ?T ?\] escape ?B])
+  (fset 'gio-assert gio-assert-macro)
+  (evil-set-register ?S gio-assert-macro)
+
 )
 
 ;; Do not write anything past this comment. This is where Emacs will
