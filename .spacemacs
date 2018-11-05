@@ -18,6 +18,7 @@ values."
    ;; of a list then all discovered layers will be installed.
    dotspacemacs-configuration-layers
    '(
+     markdown
      python
      javascript
      ;; ----------------------------------------------------------------
@@ -28,9 +29,10 @@ values."
      auto-completion
      ;; better-defaults
      csv
+     ivy
      emacs-lisp
-     eyebrowse
      git
+     themes-megapack
      ;; markdown
      ;; org
      ;; (shell :variables
@@ -40,6 +42,7 @@ values."
      ;; syntax-checking
      ;; version-control
      clojure
+     python
      )
    ;; List of additional packages that will be installed without being
    ;; wrapped in a layer. If you need some configuration for these
@@ -47,9 +50,18 @@ values."
    ;; configuration in `dotspacemacs/user-config'.
    dotspacemacs-additional-packages '(
                                       ascii
+                                      gruvbox-theme
+                                      color-theme-sanityinc-tomorrow
                                       )
    ;; A list of packages and/or extensions that will not be install and loaded.
-   dotspacemacs-excluded-packages '()
+   dotspacemacs-excluded-packages
+   '(
+     firebelly-theme
+     niflheim-theme
+     pastels-on-dark-theme
+     tronesque-theme
+     zonokai-theme
+     )
    ;; If non-nil spacemacs will delete any orphan packages, i.e. packages that
    ;; are declared in a layer which is not a member of
    ;; the list `dotspacemacs-configuration-layers'. (default t)
@@ -103,13 +115,10 @@ values."
    ;; Press <SPC> T n to cycle to the next theme in the list (works great
    ;; with 2 themes variants, one dark and one light)
    dotspacemacs-themes '(
-                         tsdh-light
-                         zenburn
-                         sanityinc-solarized-dark
-                         sanityinc-solarized-light
+                         tangotango
                          sanityinc-tomorrow-blue
-                         brin
-                         ritchie
+                         zenburn
+                         solarized-light
                          )
    ;; If non nil the cursor color matches the state color in GUI Emacs.
    dotspacemacs-colorize-cursor-according-to-state t
@@ -276,6 +285,10 @@ you should place you code here."
   (define-key evil-normal-state-map (kbd "C-a") 'evil-numbers/inc-at-pt)
   (define-key evil-normal-state-map (kbd "C-x") 'evil-numbers/dec-at-pt)
 
+  ;; Scrolling behaviour
+  (setq scroll-margin 10)
+  (setq scroll-conservatively 10)
+  
   ;; Ascii table
   (defun ascii-table ()
     "Display basic ASCII table (0 thru 128)."
@@ -380,8 +393,7 @@ you should place you code here."
   ;; <var> <type>@
   ;; =>
   ;; GIOTEST_ASSERT_EQUAL_<type>_DS2(<var>);
-  ;; [ENV]<var>
-  ;; @
+  ;; @[OUT]<var>
   ;;
   (setq gio-assert-macro [?y ?y ?p ?k ?W ?d ?a ?W ?B ?P ?a ?  escape ?B ?h ?x ?i ?G ?I ?O ?T ?E ?S ?T ?_ ?A ?S ?S ?E ?R ?T ?_ ?E ?Q ?U ?A ?L ?_ escape ?E ?a ?_ ?D ?S ?2 escape ?a ?\( escape ?l ?x ?A ?\) ?\; escape ?j ?d ?a ?W ?B ?i ?\[ ?O ?U ?T ?\] escape ?B ?j ?0])
   (fset 'gio-assert gio-assert-macro)
@@ -497,7 +509,34 @@ you should place you code here."
   (fset 'gio-assert gio-assert-macro)
   (evil-set-register ?S gio-assert-macro)
 
+  (defun my-python-start-or-switch-repl (&optional msg)
+    "Start and/or switch to the REPL."
+    (interactive "p")
+    (if (python-shell-get-process)
+        (python-shell-switch-to-shell)
+      (progn
+        (run-python)
+        (python-shell-switch-to-shell)
+        )
+      )
+    )
 )
 
 ;; Do not write anything past this comment. This is where Emacs will
 ;; auto-generate custom variable definitions.
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(package-selected-packages
+   (quote
+    (powerline parent-mode helm-core flx ghub iedit anzu evil goto-chg diminish projectile hydra highlight sesman pkg-info epl bind-map bind-key packed async typit mmt sudoku pacmacs 2048-game mmm-mode markdown-toc markdown-mode gh-md white-sand-theme rebecca-theme exotica-theme wgrep smex ivy-hydra counsel-projectile counsel swiper ivy smartparens helm orgit magit-gitflow evil-magit zenburn-theme zen-and-art-theme yapfify web-beautify underwater-theme ujelly-theme twilight-theme twilight-bright-theme twilight-anti-bright-theme toxi-theme tao-theme tangotango-theme tango-plus-theme tango-2-theme sunny-day-theme sublime-themes subatomic256-theme subatomic-theme spacegray-theme soothe-theme solarized-theme soft-stone-theme soft-morning-theme soft-charcoal-theme smyx-theme smeargle seti-theme reverse-theme railscasts-theme pyvenv pytest pyenv-mode py-isort purple-haze-theme professional-theme planet-theme pip-requirements phoenix-dark-pink-theme phoenix-dark-mono-theme organic-green-theme omtose-phellack-theme oldlace-theme occidental-theme obsidian-theme noctilux-theme naquadah-theme mustang-theme monokai-theme monochrome-theme molokai-theme moe-theme minimal-theme material-theme majapahit-theme madhat2r-theme lush-theme livid-mode skewer-mode simple-httpd live-py-mode light-soap-theme json-mode json-snatcher json-reformat js2-refactor js2-mode js-doc jbeans-theme jazz-theme ir-black-theme inkpot-theme hy-mode heroku-theme hemisu-theme helm-pydoc helm-gitignore helm-company helm-c-yasnippet hc-zenburn-theme gruvbox-theme gruber-darker-theme grandshell-theme gotham-theme gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link gandalf-theme fuzzy flatui-theme flatland-theme farmhouse-theme magit magit-popup git-commit with-editor espresso-theme dracula-theme django-theme darktooth-theme autothemer darkokai-theme darkmine-theme darkburn-theme dakrone-theme cython-mode cyberpunk-theme csv-mode company-tern dash-functional tern company-statistics company-anaconda company color-theme-sanityinc-solarized coffee-mode clues-theme clojure-snippets clj-refactor inflections edn multiple-cursors paredit peg cider-eval-sexp-fu cider queue clojure-mode cherry-blossom-theme busybee-theme bubbleberry-theme birds-of-paradise-plus-theme badwolf-theme auto-yasnippet yasnippet ascii apropospriate-theme anti-zenburn-theme anaconda-mode pythonic ample-zen-theme ample-theme alect-themes afternoon-theme ac-ispell auto-complete color-theme-sanityinc-tomorrow ws-butler winum which-key volatile-highlights vi-tilde-fringe uuidgen use-package toc-org spaceline restart-emacs request rainbow-delimiters popwin persp-mode pcre2el paradox org-plus-contrib org-bullets open-junk-file neotree move-text macrostep lorem-ipsum linum-relative link-hint info+ indent-guide hungry-delete hl-todo highlight-parentheses highlight-numbers highlight-indentation hide-comnt help-fns+ helm-themes helm-swoop helm-projectile helm-mode-manager helm-make helm-flx helm-descbinds helm-ag google-translate golden-ratio flx-ido fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-args evil-anzu eval-sexp-fu elisp-slime-nav dumb-jump define-word column-enforce-mode clean-aindent-mode auto-highlight-symbol auto-compile aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line)))
+ '(standard-indent 8)
+ '(tab-width 8))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
